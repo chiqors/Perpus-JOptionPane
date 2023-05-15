@@ -24,7 +24,7 @@ public class Book_Management_Menu {
                     new Search_Book();
                     break;
                 case 3:
-                    JOptionPane.showMessageDialog(null, "Tambah Buku");
+                    new Add_Book();
                     break;
                 case 4:
                     JOptionPane.showMessageDialog(null, "Edit Buku");
