@@ -8,7 +8,7 @@ public class Main_Menu {
         int choice = 0;
         do {
             String title = "Perpustakaan XYZ\n";
-            String menuData = "1. Pengelolaan Data Buku\n2. Registrasi Member\n3. Peminjaman Buku\n4. Pengembalian Buku\n5. Transaksi\n6. Exit";
+            String menuData = "1. Pengelolaan Data Buku\n2. Registrasi Member\n3. Peminjaman Buku\n4. Pengembalian Buku\n5. Transaksi\n\n0. Exit";
             String menu = JOptionPane.showInputDialog(null, title + menuData, "Main Menu", JOptionPane.QUESTION_MESSAGE);
             // if cancel button is clicked, then exit the program
             if (menu == null) {
@@ -32,7 +32,7 @@ public class Main_Menu {
                 case 5:
                     JOptionPane.showMessageDialog(null, "Transaksi");
                     break;
-                case 6:
+                case 0:
                     System.exit(0);
                     break;
                 default:

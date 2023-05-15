@@ -8,7 +8,7 @@ public class Book_Management_Menu {
         int choice = 0;
         do {
             String title = "Perpustakaan XYZ\n";
-            String menuData = "1. List Buku\n2. Cari Buku\n3. Tambah Buku\n4. Edit Buku\n5. Hapus Buku\n6. Kembali";
+            String menuData = "1. List Buku\n2. Cari Buku\n3. Tambah Buku\n4. Edit Buku\n5. Hapus Buku\n\n0. Kembali";
             String menu = JOptionPane.showInputDialog(null, title + menuData, "Pengelolaan Data Buku", JOptionPane.QUESTION_MESSAGE);
             // if cancel button is clicked, then exit the program
             if (menu == null) {
@@ -18,7 +18,7 @@ public class Book_Management_Menu {
 
             switch (choice) {
                 case 1:
-                    JOptionPane.showMessageDialog(null, "List Buku");
+                    new List_Books();
                     break;
                 case 2:
                     JOptionPane.showMessageDialog(null, "Cari Buku");
@@ -32,7 +32,7 @@ public class Book_Management_Menu {
                 case 5:
                     JOptionPane.showMessageDialog(null, "Hapus Buku");
                     break;
-                case 6:
+                case 0:
                     new Main_Menu();
             }
         } while (choice < 1 || choice > 5);

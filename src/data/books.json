@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Innovation and Its Enemies",
+    "author": "Calestous Juma",
+    "published": "2016-05-31",
+    "stock": 2
+  },
+  {
+    "name": "The Exponential Age",
+    "author": "Azeem Azhar",
+    "published": "2018-09-15",
+    "stock": 1
+  },
+  {
+    "name": "Artificial Intelligence and Machine Learning for Business",
+    "author": "Steven Finlay",
+    "published": "2019-01-15",
+    "stock": 1
+  },
+  {
+    "name": "The Complete Reference Java Seventh Edition",
+    "author": "Herbert Schildt",
+    "published": "2006-01-01",
+    "stock": 2
+  },
+  {
+    "name": "Learning Spring Boot 3.0",
+    "author": "Greg L. Turnquist",
+    "published": "2017-03-11",
+    "stock": 1
+  }
+]
