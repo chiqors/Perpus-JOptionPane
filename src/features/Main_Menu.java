@@ -2,6 +2,7 @@ package features;
 
 import javax.swing.*;
 import features.manage_books.Book_Management_Menu;
+import features.membership.Member_Management_Menu;
 
 public class Main_Menu {
     public Main_Menu() {
@@ -21,7 +22,7 @@ public class Main_Menu {
                     new Book_Management_Menu();
                     break;
                 case 2:
-                    JOptionPane.showMessageDialog(null, "Registrasi Member");
+                    new Member_Management_Menu();
                     break;
                 case 3:
                     JOptionPane.showMessageDialog(null, "Peminjaman Buku");

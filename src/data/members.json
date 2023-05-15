@@ -1,0 +1,23 @@
+[
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "phone": "1234567890",
+      "registered_at": "2019-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "name": "Jane Doe",
+      "email": "janedoe@example.com",
+      "phone": "9876543210",
+        "registered_at": "2020-01-01T00:00:00.000Z"
+    },
+  {
+    "id": 3,
+    "name": "John Smith",
+    "email": "johnsmith@example.com",
+    "phone": "5432109876",
+    "registered_at": "2021-01-01T00:00:00.000Z"
+  }
+]
