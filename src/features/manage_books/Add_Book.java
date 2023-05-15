@@ -57,6 +57,7 @@ public class Add_Book {
             JSONArray bookArray = (JSONArray) parser.parse(reader);
 
             JSONObject bookJson = new JSONObject();
+            bookJson.put("id", bookArray.size() + 1); // id is auto-incremented (1, 2, 3, ...
             bookJson.put("name", name);
             bookJson.put("author", author);
             bookJson.put("published", published);

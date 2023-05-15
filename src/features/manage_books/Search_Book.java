@@ -43,12 +43,14 @@ public class Search_Book {
 
             for (Object bookObj : bookArray) {
                 JSONObject bookJson = (JSONObject) bookObj;
+                int id = Integer.parseInt(bookJson.get("id").toString());
                 String name = (String) bookJson.get("name");
                 String author = (String) bookJson.get("author");
                 String published = (String) bookJson.get("published");
                 int stock = Integer.parseInt(bookJson.get("stock").toString());
 
                 if (name.toLowerCase().contains(bookName.toLowerCase())) {
+                    bookData += "ID: " + id + "\n";
                     bookData += "Nama Buku: " + name + "\n";
                     bookData += "Penulis: " + author + "\n";
                     bookData += "Tahun Terbit: " + published + "\n";
