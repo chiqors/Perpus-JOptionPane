@@ -30,7 +30,7 @@ public class Book_Management_Menu {
                     new Edit_Book();
                     break;
                 case 5:
-                    JOptionPane.showMessageDialog(null, "Hapus Buku");
+                    new Delete_Book();
                     break;
                 case 0:
                     new Main_Menu();
