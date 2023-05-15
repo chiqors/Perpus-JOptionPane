@@ -1,0 +1,40 @@
+package features.manage_books;
+
+import javax.swing.*;
+import features.Main_Menu;
+
+public class Book_Management_Menu {
+    public Book_Management_Menu() {
+        int choice = 0;
+        do {
+            String title = "Perpustakaan XYZ\n";
+            String menuData = "1. List Buku\n2. Cari Buku\n3. Tambah Buku\n4. Edit Buku\n5. Hapus Buku\n6. Kembali";
+            String menu = JOptionPane.showInputDialog(null, title + menuData, "Pengelolaan Data Buku", JOptionPane.QUESTION_MESSAGE);
+            // if cancel button is clicked, then exit the program
+            if (menu == null) {
+                System.exit(0);
+            }
+            choice = Integer.parseInt(menu);
+
+            switch (choice) {
+                case 1:
+                    JOptionPane.showMessageDialog(null, "List Buku");
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(null, "Cari Buku");
+                    break;
+                case 3:
+                    JOptionPane.showMessageDialog(null, "Tambah Buku");
+                    break;
+                case 4:
+                    JOptionPane.showMessageDialog(null, "Edit Buku");
+                    break;
+                case 5:
+                    JOptionPane.showMessageDialog(null, "Hapus Buku");
+                    break;
+                case 6:
+                    new Main_Menu();
+            }
+        } while (choice < 1 || choice > 5);
+    }
+}
