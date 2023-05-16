@@ -6,6 +6,7 @@ import features.borrowment.Borrow_Book;
 import features.manage_books.Book_Management_Menu;
 import features.membership.Member_Management_Menu;
 import features.returnment.Return_Book;
+import features.transaction.Transaction_List;
 
 public class Main_Menu {
     public Main_Menu() {
@@ -34,7 +35,7 @@ public class Main_Menu {
                     new Return_Book();
                     break;
                 case 5:
-                    JOptionPane.showMessageDialog(null, "Transaksi");
+                    new Transaction_List();
                     break;
                 case 0:
                     System.exit(0);
