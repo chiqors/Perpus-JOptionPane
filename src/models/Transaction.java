@@ -11,7 +11,7 @@ public class Transaction {
     private String member_name;
     private ArrayList<Book> borrowed_books;
 
-    public Transaction(String borrowed_date, String returned_date, String status, int member_id, String member_name, ArrayList<Book> borrowed_books) {
+    public Transaction(int id, String borrowed_date, String returned_date, String status, int member_id, String member_name, ArrayList<Book> borrowed_books) {
         this.id = id;
         this.borrowed_date = borrowed_date;
         this.returned_date = returned_date;
@@ -23,7 +23,42 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction{" + "id=" + id + ", borrowed_date=" + borrowed_date + ", returned_date=" + returned_date + ", status=" + status + ", member_id=" + member_id + ", member_name=" + member_name + ", borrowed_books=" + borrowed_books + '}';
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Book borrowedBook : borrowed_books) {
+            stringBuilder.append(borrowedBook.getName()).append("\n");
+        }
+        return "\n# ID: " + id +
+                "\n# Tanggal Pinjam/Kembali: " + borrowed_date + " - " + returned_date +
+                "\n# Status: " + status +
+                "\n# Anggota: " + member_id + " - " + member_name +
+                "\n# Buku yang dipinjam:\n" + stringBuilder.toString();
+    }
+
+    public String showMenuReturn() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Book borrowedBook : borrowed_books) {
+            stringBuilder.append("## "+borrowedBook.getName()).append("\n");
+        }
+        return "\n# ID: " + id +
+                "\n# Tanggal Pinjam/Kembali: " + borrowed_date + " - " + returned_date +
+                "\n# Anggota: " + member_id + " - " + member_name +
+                "\n# Buku yang dipinjam:\n" + stringBuilder.toString();
+    }
+
+    public String toJSONString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Book borrowedBook : borrowed_books) {
+            stringBuilder.append(borrowedBook.getName()).append("\n");
+        }
+        return "{" +
+                "\"id\":" + id +
+                ", \"borrowed_date\":\"" + borrowed_date + "\"" +
+                ", \"returned_date\":\"" + returned_date + "\"" +
+                ", \"status\":\"" + status + "\"" +
+                ", \"member_id\":" + member_id +
+                ", \"member_name\":\"" + member_name + "\"" +
+                ", \"borrowed_books\":\"" + stringBuilder.toString() + "\"" +
+                "}";
     }
 
     public int getId() {
@@ -52,5 +87,9 @@ public class Transaction {
 
     public ArrayList<Book> getBorrowedBooks() {
         return borrowed_books;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

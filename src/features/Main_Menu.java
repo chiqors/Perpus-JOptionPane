@@ -5,6 +5,7 @@ import javax.swing.*;
 import features.borrowment.Borrow_Book;
 import features.manage_books.Book_Management_Menu;
 import features.membership.Member_Management_Menu;
+import features.returnment.Return_Book;
 
 public class Main_Menu {
     public Main_Menu() {
@@ -30,7 +31,7 @@ public class Main_Menu {
                     new Borrow_Book();
                     break;
                 case 4:
-                    JOptionPane.showMessageDialog(null, "Pengembalian Buku");
+                    new Return_Book();
                     break;
                 case 5:
                     JOptionPane.showMessageDialog(null, "Transaksi");

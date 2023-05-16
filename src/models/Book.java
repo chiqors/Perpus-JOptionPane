@@ -15,9 +15,26 @@ public class Book {
         this.stock = stock;
     }
 
+    public Book(int id, String name, String author, String published) {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+        this.published = published;
+    }
+
     @Override
     public String toString() {
         return name + " - " + author + " - " + published + " - " + stock;
+    }
+
+    public String toJSONString() {
+        return "{" +
+                "\"id\":" + id +
+                ", \"name\":\"" + name + "\"" +
+                ", \"author\":\"" + author + "\"" +
+                ", \"published\":\"" + published + "\"" +
+                ", \"stock\":" + stock +
+                "}";
     }
 
     public int getId() {
