@@ -9,6 +9,7 @@ import org.json.simple.parser.JSONParser;
 import javax.swing.*;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,6 @@ public class Borrow_Book {
                 new Main_Menu();
             } else if (choice > 0 && choice <= bookList.size()) {
                 Book book = bookList.get(choice - 1);
-                System.out.println(book);
                 if (book.getStock() > 0) {
                     borrowBook(book, choice);
                 } else {
@@ -102,6 +102,12 @@ public class Borrow_Book {
             // Get last transaction id
             int lastId = getLastTransactionId(borrowedArray);
 
+            // display list of books
+            String bookData = "";
+            for (int i = 0; i < bookList.size(); i++) {
+                bookData += (i + 1) + ". " + bookList.get(i) + "\n";
+            }
+
             // Get member information
             String memberId = JOptionPane.showInputDialog(null, "Masukkan ID member", "Peminjaman", JOptionPane.QUESTION_MESSAGE);
             String memberName = JOptionPane.showInputDialog(null, "Masukkan nama member", "Peminjaman", JOptionPane.QUESTION_MESSAGE);
@@ -111,19 +117,52 @@ public class Borrow_Book {
             String returnedDate = JOptionPane.showInputDialog(null, "Masukkan tanggal pengembalian (YYYY-MM-DD)", "Peminjaman", JOptionPane.QUESTION_MESSAGE);
 
             // Create borrowed books array
-            JSONArray borrowedBooksArray = createBorrowedBooksArray(book);
+            JSONArray borrowedBooksArray = new JSONArray();
+
+            // Add the first borrowed book
+            borrowedBooksArray.add(createBorrowedBookObject(book));
+
+            // Ask if member wants to borrow another book
+            int confirm = JOptionPane.showConfirmDialog(null, "Apakah member ingin meminjam buku lain?", "Peminjaman", JOptionPane.YES_NO_OPTION);
+
+            // If member wants to borrow another book, keep adding books to the array
+            while (confirm == JOptionPane.YES_OPTION) {
+                int bookChoice = getSelectedChoice(JOptionPane.showInputDialog(null, bookData + "\n0. Kembali\n\n" + "Masukkan nomor buku yang ingin dipinjam", "Peminjaman", JOptionPane.QUESTION_MESSAGE)) - 1;
+                if (bookChoice == -1) {
+                    break;
+                }
+                Book newBook = bookList.get(bookChoice);
+                newBook.setStock(newBook.getStock() - 1);
+                saveBookListToJson();
+                borrowedBooksArray.add(createBorrowedBookObject(newBook));
+
+                confirm = JOptionPane.showConfirmDialog(null, "Apakah member ingin meminjam buku lain?", "Peminjaman", JOptionPane.YES_NO_OPTION);
+            }
 
             // Create transaction object
             JSONObject transactionJson = createTransactionObject(lastId, memberId, memberName, borrowedDate, returnedDate, borrowedBooksArray);
 
-            // Add transaction object to borrowed array
+            // Save the transaction object to the JSON array
             borrowedArray.add(transactionJson);
 
-            // Save borrowed array to JSON file
-            saveBorrowedArrayToJson(borrowedArray);
+            // Save the updated JSON array to the file
+            try (FileWriter writer = new FileWriter("src\\data\\transactions.json")) {
+                writer.write(borrowedArray.toJSONString());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+    }
+
+    private JSONObject createBorrowedBookObject(Book book) {
+        JSONObject bookJson = new JSONObject();
+        bookJson.put("author", book.getAuthor());
+        bookJson.put("name", book.getName());
+        bookJson.put("id", book.getId());
+        bookJson.put("published", book.getPublished());
+        return bookJson;
     }
 
     private int getLastTransactionId(JSONArray borrowedArray) {
@@ -133,17 +172,6 @@ public class Borrow_Book {
             lastId = Integer.parseInt(lastTransaction.get("id").toString());
         }
         return lastId;
-    }
-
-    private JSONArray createBorrowedBooksArray(Book book) {
-        JSONArray borrowedBooksArray = new JSONArray();
-        JSONObject borrowedBookJson = new JSONObject();
-        borrowedBookJson.put("id", book.getId());
-        borrowedBookJson.put("name", book.getName());
-        borrowedBookJson.put("author", book.getAuthor());
-        borrowedBookJson.put("published", book.getPublished());
-        borrowedBooksArray.add(borrowedBookJson);
-        return borrowedBooksArray;
     }
 
     private JSONObject createTransactionObject(int lastId, String memberId, String memberName, String borrowedDate, String returnedDate, JSONArray borrowedBooksArray) {
