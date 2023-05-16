@@ -9,6 +9,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -68,13 +70,30 @@ public class Return_Book {
         // Update the transaction in the list
         transactionBorrowedList.set(index, transaction);
 
+        // Verify if the returned date is after the current date
+        LocalDate currentDate = LocalDate.now();
+        LocalDate returnedDate = LocalDate.parse(transaction.getReturnedDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        if (returnedDate.isBefore(currentDate)) {
+            // Calculate the fine
+            long daysLate = currentDate.toEpochDay() - returnedDate.toEpochDay();
+            double fine = daysLate * 5000; // Assuming the fine is 5000 per day
+
+            // Display a JOptionPane dialog with the message and the fine
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Buku berhasil dikembalikan!\n\nTerlambat mengembalikan: " + daysLate + " hari\nDenda yang harus dibayar: Rp " + fine,
+                    "Pengembalian",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        } else {
+            JOptionPane.showMessageDialog(null, "Buku berhasil dikembalikan!", "Pengembalian", JOptionPane.INFORMATION_MESSAGE);
+        }
+
         // Update transaction borrowed data into JSON transaction file
         updateTransaction(transaction);
 
         // reload list of borrowed transaction from JSON file
         transactionBorrowedList = loadBorrowedTransaction();
-
-        JOptionPane.showMessageDialog(null, "Buku berhasil dikembalikan!", "Pengembalian", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void updateTransaction(Transaction transaction) {
