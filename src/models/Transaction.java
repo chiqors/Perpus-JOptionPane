@@ -11,7 +11,7 @@ public class Transaction {
     private String member_name;
     private ArrayList<Book> borrowed_books;
 
-    public Transaction(int id, String borrowed_date, String returned_date, String status, int member_id, String member_name, ArrayList<Book> borrowed_books) {
+    public Transaction(String borrowed_date, String returned_date, String status, int member_id, String member_name, ArrayList<Book> borrowed_books) {
         this.id = id;
         this.borrowed_date = borrowed_date;
         this.returned_date = returned_date;

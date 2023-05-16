@@ -7,7 +7,8 @@ public class Book {
     private String published;
     private int stock;
 
-    public Book(String name, String author, String published, int stock) {
+    public Book(int id, String name, String author, String published, int stock) {
+        this.id = id;
         this.name = name;
         this.author = author;
         this.published = published;

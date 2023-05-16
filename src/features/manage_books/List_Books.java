@@ -50,11 +50,12 @@ public class List_Books {
 
             for (Object bookObj : bookArray) {
                 JSONObject bookJson = (JSONObject) bookObj;
+                int id = Integer.parseInt(bookJson.get("id").toString());
                 String name = (String) bookJson.get("name");
                 String author = (String) bookJson.get("author");
                 String published = (String) bookJson.get("published");
                 int stock = Integer.parseInt(bookJson.get("stock").toString());
-                bookList.add(new Book(name, author, published, stock));
+                bookList.add(new Book(id, name, author, published, stock));
             }
         } catch (Exception e) {
             e.printStackTrace();
