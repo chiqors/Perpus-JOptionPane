@@ -38,4 +38,8 @@ public class Book {
     public int getStock() {
         return stock;
     }
+
+    public void setStock(int i) {
+        this.stock = i;
+    }
 }

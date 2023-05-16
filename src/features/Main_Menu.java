@@ -1,6 +1,8 @@
 package features;
 
 import javax.swing.*;
+
+import features.borrowment.Borrow_Book;
 import features.manage_books.Book_Management_Menu;
 import features.membership.Member_Management_Menu;
 
@@ -25,7 +27,7 @@ public class Main_Menu {
                     new Member_Management_Menu();
                     break;
                 case 3:
-                    JOptionPane.showMessageDialog(null, "Peminjaman Buku");
+                    new Borrow_Book();
                     break;
                 case 4:
                     JOptionPane.showMessageDialog(null, "Pengembalian Buku");
