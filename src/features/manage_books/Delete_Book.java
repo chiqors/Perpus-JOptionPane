@@ -29,9 +29,10 @@ public class Delete_Book {
             String askIdOrName = "Pilih metode penghapusan:\n1. Menghapus berdasarkan ID\n2. Menghapus berdasarkan nama";
             String method = JOptionPane.showInputDialog(null, title + content + askIdOrName, "Hapus Buku", JOptionPane.QUESTION_MESSAGE);
 
-            // if cancel button is clicked, then exit the program
+            // if cancel button is clicked, then return to Book Management Menu
             if (method == null) {
-                System.exit(0);
+                continueDeleting = false;
+                break;
             }
 
             if (method.equals("1")) {
@@ -39,9 +40,9 @@ public class Delete_Book {
                 String askId = "Masukkan ID buku yang ingin dihapus";
                 String id = JOptionPane.showInputDialog(null, title + content + askId, "Hapus Buku", JOptionPane.QUESTION_MESSAGE);
 
-                // if cancel button is clicked, then exit the program
+                // if cancel button is clicked, then return to the beginning of the loop
                 if (id == null) {
-                    System.exit(0);
+                    continue;
                 }
 
                 int bookId;
@@ -59,9 +60,9 @@ public class Delete_Book {
                 String askName = "Masukkan nama buku yang ingin dihapus";
                 String bookName = JOptionPane.showInputDialog(null, title + content + askName, "Hapus Buku", JOptionPane.QUESTION_MESSAGE);
 
-                // if cancel button is clicked, then exit the program
+                // if cancel button is clicked, then return to the beginning of the loop
                 if (bookName == null) {
-                    System.exit(0);
+                    continue;
                 }
 
                 // delete book by name
@@ -75,6 +76,9 @@ public class Delete_Book {
             int choice = JOptionPane.showConfirmDialog(null, "Apakah Anda ingin menghapus buku lain?", "Hapus Buku", JOptionPane.YES_NO_OPTION);
             continueDeleting = (choice == JOptionPane.YES_OPTION);
         }
+
+        // return to Book Management Menu
+        new Book_Management_Menu();
     }
 
     private List<Book> loadData() {

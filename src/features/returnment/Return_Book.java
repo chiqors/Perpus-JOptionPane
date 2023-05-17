@@ -1,5 +1,6 @@
 package features.returnment;
 
+import features.Main_Menu;
 import models.Book;
 import models.Transaction;
 
@@ -34,13 +35,18 @@ public class Return_Book {
             String ask = "Masukkan nomor transaksi yang ingin dikembalikan\n\n";
             String menu = JOptionPane.showInputDialog(null, title + transactionData + "\n0. Kembali\n\n" + ask, "Pengembalian", JOptionPane.QUESTION_MESSAGE);
 
-            // if cancel button is clicked, then exit the program
+            // if cancel button is clicked, then return to main menu
             if (menu == null) {
-                System.exit(0);
+                choice = 0;
+                break;
             }
 
             choice = getSelectedChoice(menu);
         } while (choice != 0);
+
+        if (choice == 0) {
+            new Main_Menu();
+        }
     }
 
     private int getSelectedChoice(String menu) {
@@ -66,13 +72,14 @@ public class Return_Book {
     private void returnBook(Transaction transaction, int choice) {
         int index = choice - 1;
         transaction.setStatus("returned");
+        transaction.setReturnedDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
         // Update the transaction in the list
         transactionBorrowedList.set(index, transaction);
 
-        // Verify if the returned date is after the current date
+        // Verify if the expected return date is after the current date
         LocalDate currentDate = LocalDate.now();
-        LocalDate returnedDate = LocalDate.parse(transaction.getReturnedDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate returnedDate = LocalDate.parse(transaction.getExpected_return_date(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         if (returnedDate.isBefore(currentDate)) {
             // Calculate the fine
             long daysLate = currentDate.toEpochDay() - returnedDate.toEpochDay();
@@ -110,6 +117,7 @@ public class Return_Book {
                 int transactionId = Integer.parseInt(transactionObject.get("id").toString());
                 if (transactionId == transaction.getId()) {
                     transactionObject.put("status", transaction.getStatus());
+                    transactionObject.put("returned_date", transaction.getReturnedDate());
 
                     // Update the stock of borrowed books
                     JSONArray borrowedBooks = (JSONArray) transactionObject.get("borrowed_books");
@@ -160,46 +168,6 @@ public class Return_Book {
         }
     }
 
-    public List<Transaction> loadAllTransaction() {
-        List<Transaction> transactionList = new ArrayList<>();
-        JSONParser parser = new JSONParser();
-
-        try (FileReader reader = new FileReader("src\\data\\transactions.json")) {
-            JSONArray transactionArray = (JSONArray) parser.parse(reader);
-
-            for (Object transaction : transactionArray) {
-                JSONObject transactionObject = (JSONObject) transaction;
-
-                // get list of borrowed books from transaction (borrowed_books)
-                JSONArray borrowedBooks = (JSONArray) transactionObject.get("borrowed_books");
-                ArrayList<Book> borrowedBookList = new ArrayList<>();
-                for (Object borrowedBook : borrowedBooks) {
-                    JSONObject borrowedBookObject = (JSONObject) borrowedBook;
-                    borrowedBookList.add(new Book(
-                        Integer.parseInt(borrowedBookObject.get("id").toString()),
-                        borrowedBookObject.get("name").toString(),
-                        borrowedBookObject.get("author").toString(),
-                        borrowedBookObject.get("published").toString()
-                    ));
-                }
-
-                transactionList.add(new Transaction(
-                    Integer.parseInt(transactionObject.get("id").toString()),
-                    transactionObject.get("borrowed_date").toString(),
-                    transactionObject.get("returned_date").toString(),
-                    transactionObject.get("status").toString(),
-                    Integer.parseInt(transactionObject.get("member_id").toString()),
-                    transactionObject.get("member_name").toString(),
-                    borrowedBookList
-                ));
-            }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-
-        return transactionList;
-    }
-
     public List<Transaction> loadBorrowedTransaction() {
         List<Transaction> transactionBorrowedList = new ArrayList<>();
         JSONParser parser = new JSONParser();
@@ -225,7 +193,7 @@ public class Return_Book {
                     transactionBorrowedList.add(new Transaction(
                         Integer.parseInt(transactionObject.get("id").toString()),
                         transactionObject.get("borrowed_date").toString(),
-                        transactionObject.get("returned_date").toString(),
+                        transactionObject.get("expected_return_date").toString(),
                         transactionObject.get("status").toString(),
                         Integer.parseInt(transactionObject.get("member_id").toString()),
                         transactionObject.get("member_name").toString(),

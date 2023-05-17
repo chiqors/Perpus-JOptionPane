@@ -10,9 +10,10 @@ public class Book_Management_Menu {
             String title = "Perpustakaan XYZ\n";
             String menuData = "1. List Buku\n2. Cari Buku\n3. Tambah Buku\n4. Edit Buku\n5. Hapus Buku\n\n0. Kembali";
             String menu = JOptionPane.showInputDialog(null, title + menuData, "Pengelolaan Data Buku", JOptionPane.QUESTION_MESSAGE);
-            // if cancel button is clicked, then exit the program
+            // if cancel button is clicked, then return to Main Menu
             if (menu == null) {
-                System.exit(0);
+                choice = 0;
+                new Main_Menu();
             }
             choice = Integer.parseInt(menu);
 

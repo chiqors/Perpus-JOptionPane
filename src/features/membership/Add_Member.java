@@ -24,9 +24,10 @@ public class Add_Member {
             String email = JOptionPane.showInputDialog(null, title + askEmail, "Tambah Member", JOptionPane.QUESTION_MESSAGE);
             String phone = JOptionPane.showInputDialog(null, title + askPhone, "Tambah Member", JOptionPane.QUESTION_MESSAGE);
 
-            // if cancel button is clicked, then exit the program
+            // if cancel button is clicked, then return to member management menu
             if (name == null || email == null || phone == null) {
-                System.exit(0);
+                choice = 2;
+                break;
             }
 
             // add member to JSON file
@@ -40,7 +41,6 @@ public class Add_Member {
                 case 1:
                     break;
                 case 2:
-                    new Member_Management_Menu();
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia! Dikembalikan ke menu awal", "Error", JOptionPane.ERROR_MESSAGE);
@@ -48,6 +48,10 @@ public class Add_Member {
                     break;
             }
         } while (choice != 2);
+
+        if (choice == 2) {
+            new Member_Management_Menu();
+        }
     }
 
     public void DoAddMember(String name, String email, String phone) {

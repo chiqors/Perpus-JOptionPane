@@ -32,9 +32,10 @@ public class Edit_Book {
 
             String id = JOptionPane.showInputDialog(null, title + content + askId, "Ubah Buku", JOptionPane.QUESTION_MESSAGE);
 
-            // if cancel button is clicked, then exit the program
+            // if cancel button is clicked, then return to Book Management Menu
             if (id == null) {
-                System.exit(0);
+                continueEditing = false;
+                break;
             }
 
             // search book by Id
@@ -53,9 +54,9 @@ public class Edit_Book {
             // now bookList.get(bookIndex) gives you the book with the specified ID
             String bookName = JOptionPane.showInputDialog(null, title + content + askName, "Ubah Buku", JOptionPane.QUESTION_MESSAGE);
 
-            // if cancel button is clicked, then exit the program
+            // if cancel button is clicked, then return to beginning of the loop
             if (bookName == null) {
-                System.exit(0);
+                continue;
             }
 
             // edit book
@@ -65,6 +66,9 @@ public class Edit_Book {
             int choice = JOptionPane.showConfirmDialog(null, "Apakah Anda ingin mengubah buku lain?", "Ubah Buku", JOptionPane.YES_NO_OPTION);
             continueEditing = (choice == JOptionPane.YES_OPTION);
         }
+
+        // if the user doesn't want to continue editing, then return to Book Management Menu
+        new Book_Management_Menu();
     }
 
     private List<Book> loadData() {
@@ -98,11 +102,13 @@ public class Edit_Book {
 
             // parse bookArray.get(bookId - 1) to get name, author, published, and stock
             JSONObject bookJson = (JSONObject) bookArray.get(bookId - 1);
+            int id = Integer.parseInt(bookJson.get("id").toString());
             String author = (String) bookJson.get("author");
             String published = (String) bookJson.get("published");
             int stock = Integer.parseInt(bookJson.get("stock").toString());
 
             JSONObject insetBook = new JSONObject();
+            insetBook.put("id", id);
             insetBook.put("name", bookName);
             insetBook.put("author", author);
             insetBook.put("published", published);

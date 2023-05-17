@@ -24,21 +24,25 @@ public class List_Books {
             }
             String menu = JOptionPane.showInputDialog(null, title + bookData + "\n0. Kembali", "List Buku", JOptionPane.QUESTION_MESSAGE);
 
-            // if cancel button is clicked, then exit the program
+            // if cancel button is clicked, then return to Book Management Menu
             if (menu == null) {
-                System.exit(0);
+                choice = 0;
+                break;
             }
             choice = Integer.parseInt(menu);
 
             switch (choice) {
                 case 0:
-                    new Book_Management_Menu();
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", "Error", JOptionPane.ERROR_MESSAGE);
                     break;
             }
         } while (choice != 0);
+
+        if (choice == 0) {
+            new Book_Management_Menu();
+        }
     }
 
     private List<Book> loadData() {

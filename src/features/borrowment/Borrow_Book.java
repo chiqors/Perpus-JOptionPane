@@ -6,6 +6,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.*;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -32,13 +34,14 @@ public class Borrow_Book {
 
             // if cancel button is clicked, then exit the program
             if (menu == null) {
-                System.exit(0);
+                choice = 0;
+                break;
             }
 
             choice = getSelectedChoice(menu);
 
             if (choice == 0) {
-                new Main_Menu();
+                break;
             } else if (choice > 0 && choice <= bookList.size()) {
                 Book book = bookList.get(choice - 1);
                 if (book.getStock() > 0) {
@@ -50,6 +53,10 @@ public class Borrow_Book {
                 JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } while (choice != 0);
+
+        if (choice == 0) {
+            new Main_Menu();
+        }
     }
 
     private int getSelectedChoice(String menu) {
@@ -113,8 +120,8 @@ public class Borrow_Book {
             String memberName = JOptionPane.showInputDialog(null, "Masukkan nama member", "Peminjaman", JOptionPane.QUESTION_MESSAGE);
 
             // Get borrowed and returned dates
-            String borrowedDate = JOptionPane.showInputDialog(null, "Masukkan tanggal peminjaman (YYYY-MM-DD)", "Peminjaman", JOptionPane.QUESTION_MESSAGE);
-            String returnedDate = JOptionPane.showInputDialog(null, "Masukkan tanggal pengembalian (YYYY-MM-DD)", "Peminjaman", JOptionPane.QUESTION_MESSAGE);
+            String borrowedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String expectedReturnDate = JOptionPane.showInputDialog(null, "Masukkan tanggal pengembalian (YYYY-MM-DD)", "Peminjaman", JOptionPane.QUESTION_MESSAGE);
 
             // Create borrowed books array
             JSONArray borrowedBooksArray = new JSONArray();
@@ -140,7 +147,7 @@ public class Borrow_Book {
             }
 
             // Create transaction object
-            JSONObject transactionJson = createTransactionObject(lastId, memberId, memberName, borrowedDate, returnedDate, borrowedBooksArray);
+            JSONObject transactionJson = createTransactionObject(lastId, memberId, memberName, borrowedDate, expectedReturnDate, borrowedBooksArray);
 
             // Save the transaction object to the JSON array
             borrowedArray.add(transactionJson);
@@ -174,25 +181,16 @@ public class Borrow_Book {
         return lastId;
     }
 
-    private JSONObject createTransactionObject(int lastId, String memberId, String memberName, String borrowedDate, String returnedDate, JSONArray borrowedBooksArray) {
+    private JSONObject createTransactionObject(int lastId, String memberId, String memberName, String borrowedDate, String expectedReturnDate, JSONArray borrowedBooksArray) {
         JSONObject transactionJson = new JSONObject();
         transactionJson.put("id", lastId + 1);
         transactionJson.put("member_id", memberId);
         transactionJson.put("member_name", memberName);
         transactionJson.put("status", "borrowed");
         transactionJson.put("borrowed_date", borrowedDate);
-        transactionJson.put("returned_date", returnedDate);
+        transactionJson.put("expected_return_date", expectedReturnDate);
         transactionJson.put("borrowed_books", borrowedBooksArray);
         return transactionJson;
-    }
-
-    private void saveBorrowedArrayToJson(JSONArray borrowedArray) {
-        try (FileWriter file = new FileWriter("src\\data\\transactions.json")) {
-            file.write(borrowedArray.toJSONString());
-            file.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private List<Book> loadBook() {

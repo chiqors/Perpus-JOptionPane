@@ -27,25 +27,30 @@ public class Transaction_List {
             // display a list of transactions
             String transactionData = "";
             for (Transaction transaction : transactionList) {
-                transactionData += transaction.toString();
+                transactionData += transaction.showMenuTransaction();
             }
             String menu = JOptionPane.showInputDialog(null, title + transactionData + "\n\n0. Kembali", "Daftar Transaksi", JOptionPane.PLAIN_MESSAGE);
 
             // if user click cancel button
             if (menu == null) {
                 choice = 0;
+                break;
             }
 
             choice = Integer.parseInt(menu);
 
             switch (choice) {
                 case 0:
-                    new Main_Menu();
+                    break;
                 default:
                     JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", "Error", JOptionPane.ERROR_MESSAGE);
                     break;
             }
         } while (choice != 0);
+
+        if (choice == 0) {
+            new Main_Menu();
+        }
     }
 
     public List<Transaction> loadAllTransaction() {
@@ -74,11 +79,12 @@ public class Transaction_List {
                 transactionList.add(new Transaction(
                         Integer.parseInt(transactionObject.get("id").toString()),
                         transactionObject.get("borrowed_date").toString(),
-                        transactionObject.get("returned_date").toString(),
+                        transactionObject.get("expected_return_date").toString(),
                         transactionObject.get("status").toString(),
                         Integer.parseInt(transactionObject.get("member_id").toString()),
                         transactionObject.get("member_name").toString(),
-                        borrowedBookList
+                        borrowedBookList,
+                        transactionObject.get("returned_date").toString()
                 ));
             }
         } catch (IOException | ParseException e) {

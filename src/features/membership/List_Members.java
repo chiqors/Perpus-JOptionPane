@@ -26,22 +26,23 @@ public class List_Members {
 
             String menu = JOptionPane.showInputDialog(null, title + memberData + "\n0. Kembali", "List Anggota", JOptionPane.QUESTION_MESSAGE);
 
-            // if cancel button is clicked, then exit the program
+            // if cancel button is clicked, then return to member management menu
             if (menu == null) {
-                System.exit(0);
+                choice = 0;
+                break;
             }
 
             choice = Integer.parseInt(menu);
 
-            switch (choice) {
-                case 0:
-                    new Member_Management_Menu();
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", "Error", JOptionPane.ERROR_MESSAGE);
-                    break;
+            if (choice != 0) {
+                // display invalid input message
+                JOptionPane.showMessageDialog(null, "Input tidak valid!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } while (choice != 0);
+
+        if (choice == 0) {
+            new Member_Management_Menu();
+        }
     }
 
     private List<Member> loadData() {
