@@ -50,7 +50,7 @@ public class List_Members {
         List<Member> memberList = new ArrayList<>();
         JSONParser parser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src\\data\\members.json")) {
+        try (FileReader reader = new FileReader(Constant.MEMBERS_FILE)) {
             JSONArray memberArray = (JSONArray) parser.parse(reader);
 
             for (Object memberObj : memberArray) {

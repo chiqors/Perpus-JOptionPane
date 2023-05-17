@@ -107,7 +107,7 @@ public class Return_Book {
     private void updateTransaction(Transaction transaction) {
         JSONParser parser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src\\data\\transactions.json")) {
+        try (FileReader reader = new FileReader(Constant.TRANSACTIONS_FILE)) {
             JSONArray transactionArray = (JSONArray) parser.parse(reader);
 
             // Update the transaction data in the JSON file
@@ -128,7 +128,7 @@ public class Return_Book {
 
                         // Load books data from the books.json file
                         JSONArray booksArray;
-                        try (FileReader booksReader = new FileReader("src\\data\\books.json")) {
+                        try (FileReader booksReader = new FileReader(Constant.BOOKS_FILE)) {
                             booksArray = (JSONArray) parser.parse(booksReader);
                         }
 
@@ -145,7 +145,7 @@ public class Return_Book {
                         }
 
                         // Write the updated books data to the books.json file
-                        try (FileWriter booksWriter = new FileWriter("src\\data\\books.json")) {
+                        try (FileWriter booksWriter = new FileWriter(Constant.BOOKS_FILE)) {
                             booksWriter.write(booksArray.toJSONString());
                             booksWriter.flush();
                         } catch (IOException e) {
@@ -158,7 +158,7 @@ public class Return_Book {
             }
 
             // Write the updated transaction data to the JSON file
-            try (FileWriter writer = new FileWriter("src\\data\\transactions.json")) {
+            try (FileWriter writer = new FileWriter(Constant.TRANSACTIONS_FILE)) {
                 writer.write(transactionArray.toJSONString());
                 writer.flush();
             } catch (IOException e) {
@@ -173,7 +173,7 @@ public class Return_Book {
         List<Transaction> transactionBorrowedList = new ArrayList<>();
         JSONParser parser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src\\data\\transactions.json")) {
+        try (FileReader reader = new FileReader(Constant.TRANSACTIONS_FILE)) {
             JSONArray transactionList = (JSONArray) parser.parse(reader);
 
             for (Object transaction : transactionList) {

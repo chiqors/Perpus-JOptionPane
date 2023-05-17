@@ -64,7 +64,7 @@ public class Add_Member {
     public void DoAddMember(String name, String email, String phone) {
         JSONParser parser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src\\data\\members.json")) {
+        try (FileReader reader = new FileReader(Constant.MEMBERS_FILE)) {
             JSONArray memberArray = (JSONArray) parser.parse(reader);
 
             JSONObject memberJson = new JSONObject();
@@ -76,7 +76,7 @@ public class Add_Member {
             memberArray.add(memberJson);
 
             // write to JSON file
-            try (FileWriter file = new FileWriter("src\\data\\members.json")) {
+            try (FileWriter file = new FileWriter(Constant.MEMBERS_FILE)) {
                 file.write(memberArray.toJSONString());
                 file.flush();
             } catch (Exception e) {

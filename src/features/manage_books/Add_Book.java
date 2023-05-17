@@ -67,7 +67,7 @@ public class Add_Book {
     public void DoAddBook(String name, String author, String published, int stock) {
         JSONParser parser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src\\data\\books.json")) {
+        try (FileReader reader = new FileReader(Constant.BOOKS_FILE)) {
             JSONArray bookArray = (JSONArray) parser.parse(reader);
 
             JSONObject bookJson = new JSONObject();
@@ -79,7 +79,7 @@ public class Add_Book {
             bookArray.add(bookJson);
 
             // write to JSON file
-            FileWriter file = new FileWriter("src\\data\\books.json");
+            FileWriter file = new FileWriter(Constant.BOOKS_FILE);
             file.write(bookArray.toJSONString());
             file.flush();
             file.close();

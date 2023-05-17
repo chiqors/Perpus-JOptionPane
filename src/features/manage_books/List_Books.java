@@ -36,7 +36,7 @@ public class List_Books {
                 case 0:
                     break;
                 default:
-                    JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", Constant.APP_NAME, JOptionPane.ERROR_MESSAGE);
                     break;
             }
         } while (choice != 0);
@@ -50,7 +50,7 @@ public class List_Books {
         List<Book> bookList = new ArrayList<>();
         JSONParser parser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src\\data\\books.json")) {
+        try (FileReader reader = new FileReader(Constant.BOOKS_FILE)) {
             JSONArray bookArray = (JSONArray) parser.parse(reader);
 
             for (Object bookObj : bookArray) {

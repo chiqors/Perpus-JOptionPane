@@ -86,7 +86,7 @@ public class Delete_Book {
         List<Book> bookList = new ArrayList<>();
         JSONParser parser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src\\data\\books.json")) {
+        try (FileReader reader = new FileReader(Constant.BOOKS_FILE)) {
             JSONArray bookArray = (JSONArray) parser.parse(reader);
 
             for (Object bookObj : bookArray) {
@@ -108,7 +108,7 @@ public class Delete_Book {
     public void doDeleteBookById(int bookId) {
         JSONParser parser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src\\data\\books.json")) {
+        try (FileReader reader = new FileReader(Constant.BOOKS_FILE)) {
             JSONArray bookArray = (JSONArray) parser.parse(reader);
 
             for (int i = 0; i < bookArray.size(); i++) {
@@ -120,7 +120,7 @@ public class Delete_Book {
                 }
             }
 
-            FileWriter file = new FileWriter("src\\data\\books.json");
+            FileWriter file = new FileWriter(Constant.BOOKS_FILE);
             file.write(bookArray.toJSONString());
             file.flush();
             file.close();
@@ -132,7 +132,7 @@ public class Delete_Book {
     public void doDeleteBookByName(String bookName) {
         JSONParser parser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src\\data\\books.json")) {
+        try (FileReader reader = new FileReader(Constant.BOOKS_FILE)) {
             JSONArray bookArray = (JSONArray) parser.parse(reader);
 
             for (int i = 0; i < bookArray.size(); i++) {
@@ -144,7 +144,7 @@ public class Delete_Book {
                 }
             }
 
-            FileWriter file = new FileWriter("src\\data\\books.json");
+            FileWriter file = new FileWriter(Constant.BOOKS_FILE);
             file.write(bookArray.toJSONString());
             file.flush();
             file.close();

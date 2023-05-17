@@ -95,7 +95,7 @@ public class Borrow_Book {
             bookArray.add(bookJson);
         }
 
-        try (FileWriter file = new FileWriter("src\\data\\books.json")) {
+        try (FileWriter file = new FileWriter(Constant.BOOKS_FILE)) {
             file.write(bookArray.toJSONString());
             file.flush();
         } catch (Exception e) {
@@ -105,7 +105,7 @@ public class Borrow_Book {
 
     private void saveBorrowedBookToJson(Book book) {
         JSONArray borrowedArray = new JSONArray();
-        try (FileReader reader = new FileReader("src\\data\\transactions.json")) {
+        try (FileReader reader = new FileReader(Constant.TRANSACTIONS_FILE)) {
             borrowedArray = (JSONArray) new JSONParser().parse(reader);
             // Get last transaction id
             int lastId = getLastTransactionId(borrowedArray);
@@ -154,7 +154,7 @@ public class Borrow_Book {
             borrowedArray.add(transactionJson);
 
             // Save the updated JSON array to the file
-            try (FileWriter writer = new FileWriter("src\\data\\transactions.json")) {
+            try (FileWriter writer = new FileWriter(Constant.TRANSACTIONS_FILE)) {
                 writer.write(borrowedArray.toJSONString());
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -198,7 +198,7 @@ public class Borrow_Book {
         List<Book> bookList = new ArrayList<>();
         JSONParser parser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src\\data\\books.json")) {
+        try (FileReader reader = new FileReader(Constant.BOOKS_FILE)) {
             JSONArray bookArray = (JSONArray) parser.parse(reader);
 
             for (Object bookObj : bookArray) {

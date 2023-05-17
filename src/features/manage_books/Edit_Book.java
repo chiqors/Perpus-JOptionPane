@@ -76,7 +76,7 @@ public class Edit_Book {
         List<Book> bookList = new ArrayList<>();
         JSONParser parser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src\\data\\books.json")) {
+        try (FileReader reader = new FileReader(Constant.BOOKS_FILE)) {
             JSONArray bookArray = (JSONArray) parser.parse(reader);
 
             for (Object bookObj : bookArray) {
@@ -98,7 +98,7 @@ public class Edit_Book {
     public void doEditBook(String bookName, int bookId) {
         JSONParser parser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src\\data\\books.json")) {
+        try (FileReader reader = new FileReader(Constant.BOOKS_FILE)) {
             JSONArray bookArray = (JSONArray) parser.parse(reader);
 
             // parse bookArray.get(bookId - 1) to get name, author, published, and stock
@@ -116,7 +116,7 @@ public class Edit_Book {
             insetBook.put("stock", stock);
             bookArray.set(bookId - 1, insetBook);
 
-            try (FileWriter file = new FileWriter("src\\data\\books.json")) {
+            try (FileWriter file = new FileWriter(Constant.BOOKS_FILE)) {
                 file.write(bookArray.toJSONString());
                 file.flush();
             } catch (Exception e) {

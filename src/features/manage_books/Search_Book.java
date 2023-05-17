@@ -43,7 +43,7 @@ public class Search_Book {
         String bookData = "";
         JSONParser parser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src\\data\\books.json")) {
+        try (FileReader reader = new FileReader(Constant.BOOKS_FILE)) {
             JSONArray bookArray = (JSONArray) parser.parse(reader);
 
             for (Object bookObj : bookArray) {
