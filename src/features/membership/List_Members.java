@@ -1,5 +1,6 @@
 package features.membership;
 
+import config.Constant;
 import models.Member;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,7 +17,7 @@ public class List_Members {
         // load list of members from JSON file
         List<Member> memberList = loadData();
         do {
-            String title = "Perpustakaan XYZ\n\n";
+            String title = "List Anggota\n\n";
 
             // display list of members
             String memberData = "";
@@ -24,7 +25,7 @@ public class List_Members {
                 memberData += (i + 1) + ". " + memberList.get(i) + "\n";
             }
 
-            String menu = JOptionPane.showInputDialog(null, title + memberData + "\n0. Kembali", "List Anggota", JOptionPane.QUESTION_MESSAGE);
+            String menu = JOptionPane.showInputDialog(null, title + memberData + "\n0. Kembali", Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
 
             // if cancel button is clicked, then return to member management menu
             if (menu == null) {
@@ -36,7 +37,7 @@ public class List_Members {
 
             if (choice != 0) {
                 // display invalid input message
-                JOptionPane.showMessageDialog(null, "Input tidak valid!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Input tidak valid!", Constant.APP_NAME, JOptionPane.ERROR_MESSAGE);
             }
         } while (choice != 0);
 

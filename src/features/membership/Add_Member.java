@@ -1,5 +1,6 @@
 package features.membership;
 
+import config.Constant;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,18 +15,24 @@ public class Add_Member {
     public Add_Member() {
         int choice;
         do {
-            String title = "Perpustakaan XYZ\n\n";
-            String askName = "Masukkan nama member";
-            String askEmail = "Masukkan email member";
-            String askPhone = "Masukkan nomor telepon member";
+            String title = "Tambah Anggota\n\n";
+            String askName = "Masukkan nama anggota";
+            String askEmail = "Masukkan email anggota";
+            String askPhone = "Masukkan nomor telepon anggota";
 
             // get input from user
-            String name = JOptionPane.showInputDialog(null, title + askName, "Tambah Member", JOptionPane.QUESTION_MESSAGE);
-            String email = JOptionPane.showInputDialog(null, title + askEmail, "Tambah Member", JOptionPane.QUESTION_MESSAGE);
-            String phone = JOptionPane.showInputDialog(null, title + askPhone, "Tambah Member", JOptionPane.QUESTION_MESSAGE);
-
-            // if cancel button is clicked, then return to member management menu
-            if (name == null || email == null || phone == null) {
+            String name = JOptionPane.showInputDialog(null, title + askName, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
+            if (name == null) {
+                choice = 2;
+                break;
+            }
+            String email = JOptionPane.showInputDialog(null, title + askEmail, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
+            if (email == null) {
+                choice = 2;
+                break;
+            }
+            String phone = JOptionPane.showInputDialog(null, title + askPhone, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
+            if (phone == null) {
                 choice = 2;
                 break;
             }
@@ -34,7 +41,7 @@ public class Add_Member {
             DoAddMember(name, email, phone);
 
             // ask user if they want to add another member
-            String AddMore = JOptionPane.showInputDialog(null, title + "Tambah member lagi?\n1. Ya\n2. Tidak", "Tambah Member", JOptionPane.QUESTION_MESSAGE);
+            String AddMore = JOptionPane.showInputDialog(null, title + "Tambah anggota lagi?\n1. Ya\n2. Tidak", "Tambah Member", JOptionPane.QUESTION_MESSAGE);
             choice = Integer.parseInt(AddMore);
 
             switch (choice) {
@@ -43,7 +50,7 @@ public class Add_Member {
                 case 2:
                     break;
                 default:
-                    JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia! Dikembalikan ke menu awal", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia! Dikembalikan ke menu awal", Constant.APP_NAME, JOptionPane.ERROR_MESSAGE);
                     new Member_Management_Menu();
                     break;
             }

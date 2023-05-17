@@ -1,5 +1,6 @@
 package features.manage_books;
 
+import config.Constant;
 import models.Book;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,7 +19,7 @@ public class Edit_Book {
         boolean continueEditing = true; // Flag to control the loop
 
         while (continueEditing) {
-            String title = "Perpustakaan XYZ\n\n";
+            String title = "Ubah Buku\n\n";
             String content = "List Buku\n\n";
 
             // display list of books
@@ -30,7 +31,7 @@ public class Edit_Book {
             String askId = "Masukkan ID buku yang ingin diubah";
             String askName = "Masukkan nama buku";
 
-            String id = JOptionPane.showInputDialog(null, title + content + askId, "Ubah Buku", JOptionPane.QUESTION_MESSAGE);
+            String id = JOptionPane.showInputDialog(null, title + content + askId, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
 
             // if cancel button is clicked, then return to Book Management Menu
             if (id == null) {
@@ -43,16 +44,16 @@ public class Edit_Book {
             try {
                 bookIndex = Integer.parseInt(id) - 1;
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Masukkan ID yang valid!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Masukkan ID yang valid!", Constant.APP_NAME, JOptionPane.ERROR_MESSAGE);
                 continue;
             }
             if (bookIndex < 0 || bookIndex >= bookList.size()) {
-                JOptionPane.showMessageDialog(null, "ID buku tidak valid!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "ID buku tidak valid!", Constant.APP_NAME, JOptionPane.ERROR_MESSAGE);
                 continue;
             }
 
             // now bookList.get(bookIndex) gives you the book with the specified ID
-            String bookName = JOptionPane.showInputDialog(null, title + content + askName, "Ubah Buku", JOptionPane.QUESTION_MESSAGE);
+            String bookName = JOptionPane.showInputDialog(null, title + content + askName, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
 
             // if cancel button is clicked, then return to beginning of the loop
             if (bookName == null) {
@@ -63,7 +64,7 @@ public class Edit_Book {
             doEditBook(bookName, bookIndex + 1);
 
             // ask if the user wants to continue editing
-            int choice = JOptionPane.showConfirmDialog(null, "Apakah Anda ingin mengubah buku lain?", "Ubah Buku", JOptionPane.YES_NO_OPTION);
+            int choice = JOptionPane.showConfirmDialog(null, "Apakah Anda ingin mengubah buku lain?", Constant.APP_NAME, JOptionPane.YES_NO_OPTION);
             continueEditing = (choice == JOptionPane.YES_OPTION);
         }
 

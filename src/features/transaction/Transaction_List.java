@@ -1,5 +1,6 @@
 package features.transaction;
 
+import config.Constant;
 import features.Main_Menu;
 import models.Book;
 import models.Transaction;
@@ -23,13 +24,13 @@ public class Transaction_List {
         int choice;
         transactionList = loadAllTransaction();
         do {
-            String title = "Perpustakaan XYZ\n\n";
+            String title = "Daftar Transaksi\n\n";
             // display a list of transactions
             String transactionData = "";
             for (Transaction transaction : transactionList) {
                 transactionData += transaction.showMenuTransaction();
             }
-            String menu = JOptionPane.showInputDialog(null, title + transactionData + "\n\n0. Kembali", "Daftar Transaksi", JOptionPane.PLAIN_MESSAGE);
+            String menu = JOptionPane.showInputDialog(null, title + transactionData + "\n\n0. Kembali", Constant.APP_NAME, JOptionPane.PLAIN_MESSAGE);
 
             // if user click cancel button
             if (menu == null) {
@@ -43,7 +44,7 @@ public class Transaction_List {
                 case 0:
                     break;
                 default:
-                    JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", Constant.APP_NAME, JOptionPane.ERROR_MESSAGE);
                     break;
             }
         } while (choice != 0);
@@ -57,7 +58,7 @@ public class Transaction_List {
         List<Transaction> transactionList = new ArrayList<>();
         JSONParser parser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src\\data\\transactions.json")) {
+        try (FileReader reader = new FileReader(Constant.TRANSACTIONS_FILE)) {
             JSONArray transactionArray = (JSONArray) parser.parse(reader);
 
             for (Object transaction : transactionArray) {

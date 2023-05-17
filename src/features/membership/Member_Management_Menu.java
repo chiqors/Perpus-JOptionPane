@@ -1,5 +1,6 @@
 package features.membership;
 
+import config.Constant;
 import features.Main_Menu;
 
 import javax.swing.*;
@@ -8,9 +9,9 @@ public class Member_Management_Menu {
     public Member_Management_Menu() {
         int choice;
         do {
-            String title = "Perpustakaan XYZ\n";
+            String title = "Pengelolaan Data Anggota\n";
             String content = "1. List Anggota\n2. Tambah Anggota\n\n0. Kembali";
-            String menu = JOptionPane.showInputDialog(null, title + content, "Pengelolaan Data Anggota", JOptionPane.QUESTION_MESSAGE);
+            String menu = JOptionPane.showInputDialog(null, title + content, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
 
             // if cancel button is clicked, then return to main menu
             if (menu == null) {

@@ -1,5 +1,6 @@
 package features.manage_books;
 
+import config.Constant;
 import models.Book;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,13 +17,13 @@ public class List_Books {
         // load list of books from JSON file
         List<Book> bookList = loadData();
         do {
-            String title = "Perpustakaan XYZ\n\n";
+            String title = "Daftar Buku\n\n";
             // display list of books
             String bookData = "";
             for (int i = 0; i < bookList.size(); i++) {
                 bookData += (i + 1) + ". " + bookList.get(i) + "\n";
             }
-            String menu = JOptionPane.showInputDialog(null, title + bookData + "\n0. Kembali", "List Buku", JOptionPane.QUESTION_MESSAGE);
+            String menu = JOptionPane.showInputDialog(null, title + bookData + "\n0. Kembali", Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
 
             // if cancel button is clicked, then return to Book Management Menu
             if (menu == null) {

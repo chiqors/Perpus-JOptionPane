@@ -1,15 +1,17 @@
 package features.manage_books;
 
 import javax.swing.*;
+
+import config.Constant;
 import features.Main_Menu;
 
 public class Book_Management_Menu {
     public Book_Management_Menu() {
         int choice = 0;
         do {
-            String title = "Perpustakaan XYZ\n";
+            String title = "Pengelolaan Data Buku\n\n";
             String menuData = "1. List Buku\n2. Cari Buku\n3. Tambah Buku\n4. Edit Buku\n5. Hapus Buku\n\n0. Kembali";
-            String menu = JOptionPane.showInputDialog(null, title + menuData, "Pengelolaan Data Buku", JOptionPane.QUESTION_MESSAGE);
+            String menu = JOptionPane.showInputDialog(null, title + menuData, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
             // if cancel button is clicked, then return to Main Menu
             if (menu == null) {
                 choice = 0;

@@ -1,5 +1,6 @@
 package features.borrowment;
 
+import config.Constant;
 import features.Main_Menu;
 import models.Book;
 import org.json.simple.JSONArray;
@@ -23,14 +24,14 @@ public class Borrow_Book {
         // load list of books from JSON file
         bookList = loadBook();
         do {
-            String title = "Perpustakaan XYZ\n\n";
+            String title = "Peminjaman Buku\n\n";
             // display list of books
             String bookData = "";
             for (int i = 0; i < bookList.size(); i++) {
                 bookData += (i + 1) + ". " + bookList.get(i) + "\n";
             }
             String ask = "Masukkan nomor buku yang ingin dipinjam\n\n";
-            String menu = JOptionPane.showInputDialog(null, title + bookData + "\n0. Kembali\n\n" + ask, "Peminjaman", JOptionPane.QUESTION_MESSAGE);
+            String menu = JOptionPane.showInputDialog(null, title + bookData + "\n0. Kembali\n\n" + ask, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
 
             // if cancel button is clicked, then exit the program
             if (menu == null) {
@@ -47,10 +48,10 @@ public class Borrow_Book {
                 if (book.getStock() > 0) {
                     borrowBook(book, choice);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Buku tidak tersedia!", "Peminjaman", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Buku tidak tersedia!", Constant.APP_NAME, JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", Constant.APP_NAME, JOptionPane.ERROR_MESSAGE);
             }
         } while (choice != 0);
 
@@ -64,7 +65,7 @@ public class Borrow_Book {
         try {
             choice = Integer.parseInt(menu);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", Constant.APP_NAME, JOptionPane.ERROR_MESSAGE);
         }
         return choice;
     }
@@ -79,7 +80,7 @@ public class Borrow_Book {
         // Save borrowed book to JSON file
         saveBorrowedBookToJson(book);
 
-        JOptionPane.showMessageDialog(null, "Buku berhasil dipinjam!", "Peminjaman", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Buku berhasil dipinjam!", Constant.APP_NAME, JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void saveBookListToJson() {
@@ -116,12 +117,12 @@ public class Borrow_Book {
             }
 
             // Get member information
-            String memberId = JOptionPane.showInputDialog(null, "Masukkan ID member", "Peminjaman", JOptionPane.QUESTION_MESSAGE);
-            String memberName = JOptionPane.showInputDialog(null, "Masukkan nama member", "Peminjaman", JOptionPane.QUESTION_MESSAGE);
+            String memberId = JOptionPane.showInputDialog(null, "Masukkan ID member", Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
+            String memberName = JOptionPane.showInputDialog(null, "Masukkan nama member", Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
 
             // Get borrowed and returned dates
             String borrowedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            String expectedReturnDate = JOptionPane.showInputDialog(null, "Masukkan tanggal pengembalian (YYYY-MM-DD)", "Peminjaman", JOptionPane.QUESTION_MESSAGE);
+            String expectedReturnDate = JOptionPane.showInputDialog(null, "Masukkan tanggal pengembalian (YYYY-MM-DD)", Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
 
             // Create borrowed books array
             JSONArray borrowedBooksArray = new JSONArray();
@@ -130,11 +131,11 @@ public class Borrow_Book {
             borrowedBooksArray.add(createBorrowedBookObject(book));
 
             // Ask if member wants to borrow another book
-            int confirm = JOptionPane.showConfirmDialog(null, "Apakah member ingin meminjam buku lain?", "Peminjaman", JOptionPane.YES_NO_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(null, "Apakah member ingin meminjam buku lain?", Constant.APP_NAME, JOptionPane.YES_NO_OPTION);
 
             // If member wants to borrow another book, keep adding books to the array
             while (confirm == JOptionPane.YES_OPTION) {
-                int bookChoice = getSelectedChoice(JOptionPane.showInputDialog(null, bookData + "\n0. Kembali\n\n" + "Masukkan nomor buku yang ingin dipinjam", "Peminjaman", JOptionPane.QUESTION_MESSAGE)) - 1;
+                int bookChoice = getSelectedChoice(JOptionPane.showInputDialog(null, bookData + "\n0. Kembali\n\n" + "Masukkan nomor buku yang ingin dipinjam", Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE)) - 1;
                 if (bookChoice == -1) {
                     break;
                 }
@@ -143,7 +144,7 @@ public class Borrow_Book {
                 saveBookListToJson();
                 borrowedBooksArray.add(createBorrowedBookObject(newBook));
 
-                confirm = JOptionPane.showConfirmDialog(null, "Apakah member ingin meminjam buku lain?", "Peminjaman", JOptionPane.YES_NO_OPTION);
+                confirm = JOptionPane.showConfirmDialog(null, "Apakah member ingin meminjam buku lain?", Constant.APP_NAME, JOptionPane.YES_NO_OPTION);
             }
 
             // Create transaction object

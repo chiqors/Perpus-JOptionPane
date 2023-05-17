@@ -1,5 +1,6 @@
 package features.manage_books;
 
+import config.Constant;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,10 +12,10 @@ public class Search_Book {
     public Search_Book() {
         int choice = 0;
         // load search result from JSON file
-        String bookData = DoSearchBook(JOptionPane.showInputDialog(null, "Masukkan nama buku yang ingin dicari:", "Cari Buku", JOptionPane.QUESTION_MESSAGE));
+        String bookData = DoSearchBook(JOptionPane.showInputDialog(null, "Masukkan nama buku yang ingin dicari:", Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE));
         do {
-            String title = "Perpustakaan XYZ\n\n";
-            String menu = JOptionPane.showInputDialog(null, title + bookData + "\n0. Kembali", "Cari Buku", JOptionPane.QUESTION_MESSAGE);
+            String title = "Cari Buku\n\n";
+            String menu = JOptionPane.showInputDialog(null, title + bookData + "\n0. Kembali", Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
 
             // if cancel button is clicked, then break the loop and return to Book Management Menu
             if (menu == null) {

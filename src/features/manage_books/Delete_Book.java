@@ -1,5 +1,6 @@
 package features.manage_books;
 
+import config.Constant;
 import models.Book;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,7 +18,7 @@ public class Delete_Book {
         boolean continueDeleting = true; // Flag to control the loop
 
         while (continueDeleting) {
-            String title = "Perpustakaan XYZ\n\n";
+            String title = "Hapus Buku\n\n";
             String content = "List Buku\n\n";
 
             // display list of books
@@ -27,7 +28,7 @@ public class Delete_Book {
             content += "\n";
 
             String askIdOrName = "Pilih metode penghapusan:\n1. Menghapus berdasarkan ID\n2. Menghapus berdasarkan nama";
-            String method = JOptionPane.showInputDialog(null, title + content + askIdOrName, "Hapus Buku", JOptionPane.QUESTION_MESSAGE);
+            String method = JOptionPane.showInputDialog(null, title + content + askIdOrName, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
 
             // if cancel button is clicked, then return to Book Management Menu
             if (method == null) {
@@ -38,7 +39,7 @@ public class Delete_Book {
             if (method.equals("1")) {
                 // Delete by ID
                 String askId = "Masukkan ID buku yang ingin dihapus";
-                String id = JOptionPane.showInputDialog(null, title + content + askId, "Hapus Buku", JOptionPane.QUESTION_MESSAGE);
+                String id = JOptionPane.showInputDialog(null, title + content + askId, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
 
                 // if cancel button is clicked, then return to the beginning of the loop
                 if (id == null) {
@@ -49,7 +50,7 @@ public class Delete_Book {
                 try {
                     bookId = Integer.parseInt(id);
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Masukkan ID yang valid!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Masukkan ID yang valid!", Constant.APP_NAME, JOptionPane.ERROR_MESSAGE);
                     continue;
                 }
 
@@ -58,7 +59,7 @@ public class Delete_Book {
             } else if (method.equals("2")) {
                 // Delete by name
                 String askName = "Masukkan nama buku yang ingin dihapus";
-                String bookName = JOptionPane.showInputDialog(null, title + content + askName, "Hapus Buku", JOptionPane.QUESTION_MESSAGE);
+                String bookName = JOptionPane.showInputDialog(null, title + content + askName, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
 
                 // if cancel button is clicked, then return to the beginning of the loop
                 if (bookName == null) {
@@ -68,12 +69,12 @@ public class Delete_Book {
                 // delete book by name
                 doDeleteBookByName(bookName);
             } else {
-                JOptionPane.showMessageDialog(null, "Pilihan tidak valid!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Pilihan tidak valid!", Constant.APP_NAME, JOptionPane.ERROR_MESSAGE);
                 continue;
             }
 
             // ask if the user wants to continue deleting
-            int choice = JOptionPane.showConfirmDialog(null, "Apakah Anda ingin menghapus buku lain?", "Hapus Buku", JOptionPane.YES_NO_OPTION);
+            int choice = JOptionPane.showConfirmDialog(null, "Apakah Anda ingin menghapus buku lain?", Constant.APP_NAME, JOptionPane.YES_NO_OPTION);
             continueDeleting = (choice == JOptionPane.YES_OPTION);
         }
 

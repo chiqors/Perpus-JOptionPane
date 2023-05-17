@@ -1,5 +1,6 @@
 package features.returnment;
 
+import config.Constant;
 import features.Main_Menu;
 import models.Book;
 import models.Transaction;
@@ -26,14 +27,14 @@ public class Return_Book {
         // load list of borrowed transaction from JSON file
         transactionBorrowedList = loadBorrowedTransaction();
         do {
-            String title = "Perpustakaan XYZ\n\n";
+            String title = "Pengembalian Buku\n\n";
             // display list of borrowed transaction
             String transactionData = "";
             for (int i = 0; i < transactionBorrowedList.size(); i++) {
                 transactionData += (i + 1) + ". " + transactionBorrowedList.get(i).showMenuReturn() + "\n";
             }
             String ask = "Masukkan nomor transaksi yang ingin dikembalikan\n\n";
-            String menu = JOptionPane.showInputDialog(null, title + transactionData + "\n0. Kembali\n\n" + ask, "Pengembalian", JOptionPane.QUESTION_MESSAGE);
+            String menu = JOptionPane.showInputDialog(null, title + transactionData + "\n0. Kembali\n\n" + ask, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
 
             // if cancel button is clicked, then return to main menu
             if (menu == null) {
@@ -54,7 +55,7 @@ public class Return_Book {
         try {
             choice = Integer.parseInt(menu);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", Constant.APP_NAME, JOptionPane.ERROR_MESSAGE);
         }
 
         if (choice == 0) {
@@ -63,7 +64,7 @@ public class Return_Book {
             Transaction transaction = transactionBorrowedList.get(choice - 1);
             returnBook(transaction, choice);
         } else {
-            JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia!", Constant.APP_NAME, JOptionPane.ERROR_MESSAGE);
         }
 
         return choice;
@@ -89,11 +90,11 @@ public class Return_Book {
             JOptionPane.showMessageDialog(
                     null,
                     "Buku berhasil dikembalikan!\n\nTerlambat mengembalikan: " + daysLate + " hari\nDenda yang harus dibayar: Rp " + fine,
-                    "Pengembalian",
+                    Constant.APP_NAME,
                     JOptionPane.INFORMATION_MESSAGE
             );
         } else {
-            JOptionPane.showMessageDialog(null, "Buku berhasil dikembalikan!", "Pengembalian", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Buku berhasil dikembalikan!", Constant.APP_NAME, JOptionPane.INFORMATION_MESSAGE);
         }
 
         // Update transaction borrowed data into JSON transaction file

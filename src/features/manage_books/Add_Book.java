@@ -1,5 +1,6 @@
 package features.manage_books;
 
+import config.Constant;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,20 +13,30 @@ public class Add_Book {
     public Add_Book() {
         int choice;
         do {
-            String title = "Perpustakaan XYZ\n\n";
+            String title = "Tambah Buku\n\n";
             String askName = "Masukkan nama buku";
             String askAuthor = "Masukkan nama pengarang";
             String askPublished = "Masukkan tahun terbit";
             String askStock = "Masukkan jumlah stok";
 
             // get input from user
-            String name = JOptionPane.showInputDialog(null, title + askName, "Tambah Buku", JOptionPane.QUESTION_MESSAGE);
-            String author = JOptionPane.showInputDialog(null, title + askAuthor, "Tambah Buku", JOptionPane.QUESTION_MESSAGE);
-            String published = JOptionPane.showInputDialog(null, title + askPublished, "Tambah Buku", JOptionPane.QUESTION_MESSAGE);
-            String stock = JOptionPane.showInputDialog(null, title + askStock, "Tambah Buku", JOptionPane.QUESTION_MESSAGE);
-
-            // if cancel button is clicked, then return to Book Management Menu
-            if (name == null || author == null || published == null || stock == null) {
+            String name = JOptionPane.showInputDialog(null, title + askName, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
+            if (name == null) {
+                choice = 1;
+                break;
+            }
+            String author = JOptionPane.showInputDialog(null, title + askAuthor, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
+            if (author == null) {
+                choice = 1;
+                break;
+            }
+            String published = JOptionPane.showInputDialog(null, title + askPublished, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
+            if (published == null) {
+                choice = 1;
+                break;
+            }
+            String stock = JOptionPane.showInputDialog(null, title + askStock, Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
+            if (stock == null) {
                 choice = 1;
                 break;
             }
@@ -34,7 +45,7 @@ public class Add_Book {
             DoAddBook(name, author, published, Integer.parseInt(stock));
 
             // ask user if they want to add another book
-            String AddMore = JOptionPane.showConfirmDialog(null, title + "Tambah buku lagi?", "Tambah Buku", JOptionPane.YES_NO_OPTION) + "";
+            String AddMore = JOptionPane.showConfirmDialog(null, title + "Tambah buku lagi?", Constant.APP_NAME, JOptionPane.YES_NO_OPTION) + "";
             choice = Integer.parseInt(AddMore);
 
             switch (choice) {
@@ -42,7 +53,7 @@ public class Add_Book {
                 case 1:
                     break;
                 default:
-                    JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia! Dikembalikan ke menu awal", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Pilihan tidak tersedia! Dikembalikan ke menu awal", Constant.APP_NAME, JOptionPane.ERROR_MESSAGE);
                     new Book_Management_Menu();
                     break;
             }
