@@ -117,8 +117,22 @@ public class Borrow_Book {
             }
 
             // Get member information
-            String memberId = JOptionPane.showInputDialog(null, "Masukkan ID member", Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
-            String memberName = JOptionPane.showInputDialog(null, "Masukkan nama member", Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
+            String memberId;
+            String memberName;
+            String verified = "N";
+
+            do {
+                memberId = JOptionPane.showInputDialog(null, "Masukkan ID member", Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
+                memberName = getMemberNameById(memberId); // Retrieve member name based on ID
+
+                if (memberName != null) {
+                    // Member name found, show confirmation dialog yes/no for member verification
+                    verified = JOptionPane.showInputDialog(null, "Apakah member " + memberName + " ingin meminjam buku ini? (Y/N)", Constant.APP_NAME, JOptionPane.QUESTION_MESSAGE);
+                } else {
+                    // Member ID not found, display error message and repeat input
+                    JOptionPane.showMessageDialog(null, "Member ID tidak ditemukan. Silakan coba lagi.", Constant.APP_NAME, JOptionPane.ERROR_MESSAGE);
+                }
+            } while (memberName == null || !verified.equalsIgnoreCase("Y"));
 
             // Get borrowed and returned dates
             String borrowedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -164,6 +178,7 @@ public class Borrow_Book {
         }
     }
 
+
     private JSONObject createBorrowedBookObject(Book book) {
         JSONObject bookJson = new JSONObject();
         bookJson.put("author", book.getAuthor());
@@ -192,6 +207,23 @@ public class Borrow_Book {
         transactionJson.put("expected_return_date", expectedReturnDate);
         transactionJson.put("borrowed_books", borrowedBooksArray);
         return transactionJson;
+    }
+
+    private String getMemberNameById(String memberId) {
+        String memberName = null;
+        try (FileReader reader = new FileReader(Constant.MEMBERS_FILE)) {
+            JSONArray memberArray = (JSONArray) new JSONParser().parse(reader);
+            for (Object memberObj : memberArray) {
+                JSONObject memberJson = (JSONObject) memberObj;
+                if (memberJson.get("id").toString().equals(memberId)) {
+                    memberName = (String) memberJson.get("name");
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return memberName;
     }
 
     private List<Book> loadBook() {
